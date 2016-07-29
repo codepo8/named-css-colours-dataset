@@ -73,7 +73,8 @@ var cols = ['AliceBlue','AntiqueWhite','Aqua','Aquamarine','Azure','Beige','Bisq
   JSON += '\n"amount": ' + cols.length + ',';
   JSON += '\n"colours": {';
   cols.forEach(function (col) {
-      JSON += '\n    "'+col+'": {"rgb": "' + getcol(col, 'rgb') + '", "hex": "' + getcol(col, 'hex') + '", "readable": "' + col.replace(/([A-Z])/g, ' $1').replace(' ','') + '"},'
+      JSON += '"' + getcol(col, 'hex') + '|'+col.replace(/([A-Z])/g, ' $1').replace(' ','')+'",'
+//      JSON += '\n    "'+col+'": {"rgb": "' + getcol(col, 'rgb') + '", "hex": "' + getcol(col, 'hex') + '", "readable": "' + col.replace(/([A-Z])/g, ' $1').replace(' ','') + '"},'
   });  
   JSON = JSON.replace(/,$/,'');
   JSON += '\n  }';
