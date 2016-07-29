@@ -7,10 +7,14 @@
   <style type="text/css">
     body {
         font-family: helvetica, arial, sans-serif;
+        margin: 2em;
     }
     th {
         background: darkgreen;
         color: linen;
+    }
+    tr:hover {
+        background: #eee;
     }
     td, th {
         padding: 5px;
@@ -18,11 +22,18 @@
     td {
         padding: 5px 1em 5px 2em;
     }
-    textarea {
-        width: 90%; 
-        height: 200px;
-        margin: 2em 0;
+    table {
+        float: left;
+        width:45%;
+        min-width: 600px;
+        margin-right: 5%;
     }
+    textarea {
+        min-width: 40%; 
+        max-width: 90%; 
+        height: 200px;
+    }
+    a {text-decoration:none;color: #369;}
   </style>
 </head>
 <body>
@@ -38,10 +49,10 @@
         </thead>
     </table><b></b>
     <form action="">
-        <textarea cols="30" rows="10">
-
-
-        </textarea>
+        <h2>Dataset as JSON <a href="named-css-colours.json">⬇</a></h2>
+        <textarea id="bigjson" cols="30" rows="10"></textarea>
+        <h2>Smaller Dataset as JSON (hex code as key) <a href="named-css-colours-compact.json">⬇</a></h2>
+        <textarea id="smalljson" cols="30" rows="10"></textarea>
     </form>
 <script>
 (function(){
@@ -72,14 +83,21 @@ var cols = ['AliceBlue','AntiqueWhite','Aqua','Aquamarine','Azure','Beige','Bisq
   var JSON = 'NamedCSSColours = {';
   JSON += '\n"amount": ' + cols.length + ',';
   JSON += '\n"colours": {';
+  var sJSON = 'NamedCSSColours = {';
+  sJSON += '\n"amount": ' + cols.length + ',';
+  sJSON += '\n"colours": {';
   cols.forEach(function (col) {
-      JSON += '"' + getcol(col, 'hex') + '|'+col.replace(/([A-Z])/g, ' $1').replace(' ','')+'",'
-//      JSON += '\n    "'+col+'": {"rgb": "' + getcol(col, 'rgb') + '", "hex": "' + getcol(col, 'hex') + '", "readable": "' + col.replace(/([A-Z])/g, ' $1').replace(' ','') + '"},'
+      JSON += '\n    "'+col+'": {"rgb": "' + getcol(col, 'rgb') + '", "hex": "' + getcol(col, 'hex') + '", "readable": "' + col.replace(/([A-Z])/g, ' $1').replace(' ','') + '"},'
+      sJSON += '"' + getcol(col, 'hex') + '":"'+col.replace(/([A-Z])/g, ' $1').replace(' ','')+'",'
   });  
   JSON = JSON.replace(/,$/,'');
   JSON += '\n  }';
   JSON += '\n}';
-  document.querySelector('textarea').value = JSON;
+  sJSON = sJSON.replace(/,$/,'');
+  sJSON += '\n  }';
+  sJSON += '\n}';
+  document.querySelector('#bigjson').value = JSON;
+  document.querySelector('#smalljson').value = sJSON;
   cols.forEach(addrow);
 })();
 </script>
